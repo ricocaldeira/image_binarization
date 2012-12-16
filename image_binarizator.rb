@@ -25,6 +25,19 @@ class Imagem
 		@imagem = @imagem.quantize(256, Magick::GRAYColorspace)
 	end
 
+	def aplicar_threshold(valor_do_threshold)
+		valor_do_threshold *= 65535
+		for x in 0..@imagem.columns-1
+			for y in 0..@imagem.rows-1
+				if @imagem.pixel_color(x,y).red >= valor_do_threshold
+					@imagem.pixel_color(x,y,"black")
+				else
+					@imagem.pixel_color(x,y,"white")
+				end
+			end
+		end
+	end
+
 	def mostra_pixels
 		@imagem.each_pixel do |pixel|
 			puts pixel
@@ -33,16 +46,7 @@ class Imagem
 
 	def binarizar_imagem(threshold=1)
 		converter_para_escala_de_cinza
-		threshold *= 65535
-		for x in 0..@imagem.columns-1
-			for y in 0..@imagem.rows-1
-				if @imagem.pixel_color(x,y).red >= threshold
-					@imagem.pixel_color(x,y,"black")
-				else
-					@imagem.pixel_color(x,y,"white")
-				end
-			end
-		end
+		aplicar_threshold(threshold)
 		gravar_imagem(@imagem, "#{@nome_do_arquivo}_versao_binarizada.jpg")
 	end
 
