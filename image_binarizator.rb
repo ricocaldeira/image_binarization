@@ -21,7 +21,7 @@ class Imagem
 		@imagem = ImageList.new("#{nome_da_imagem}")
 	end
 
-	def converter_para_escala_de_cinza
+	def converter_imagem_para_tons_de_cinza
 		@imagem = @imagem.quantize(256, Magick::GRAYColorspace)
 	end
 
@@ -45,7 +45,7 @@ class Imagem
 	end
 
 	def binarizar_imagem(threshold=1)
-		converter_para_escala_de_cinza
+		converter_imagem_para_tons_de_cinza
 		aplicar_threshold(threshold)
 		gravar_imagem(@imagem, "#{@nome_do_arquivo}_versao_binarizada.jpg")
 	end
@@ -54,7 +54,7 @@ class Imagem
 		imagem.write("#{nome_do_arquivo}")
 	end
 
-	private :converter_para_escala_de_cinza, :gravar_imagem
+	private :converter_imagem_para_tons_de_cinza, :gravar_imagem
 
 end
 
