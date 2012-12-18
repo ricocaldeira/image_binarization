@@ -16,6 +16,15 @@ pixel.green imprime o valor do pixel verde
 
 class Imagem < Magick::ImageList
   
+  def binarizar(threshold=1)
+    extrair_nome
+    converter_imagem_para_tons_de_cinza
+    aplicar_threshold(threshold)
+    gravar("#{@nome_da_imagem}_binarizada.#{@extensao_da_imagem}")
+  end
+
+  private
+
   def converter_imagem_para_tons_de_cinza
     self.quantize(256, Magick::GRAYColorspace)
   end
@@ -37,15 +46,6 @@ class Imagem < Magick::ImageList
   def extrair_nome
     @nome_da_imagem, @extensao_da_imagem = self.filename.split('.')
   end
-
-  def binarizar(threshold=1)
-    extrair_nome
-    converter_imagem_para_tons_de_cinza
-    aplicar_threshold(threshold)
-    gravar("#{@nome_da_imagem}_binarizada.#{@extensao_da_imagem}")
-  end
-
-  private :converter_imagem_para_tons_de_cinza, :gravar, :aplicar_threshold, :extrair_nome
 
 end
 
