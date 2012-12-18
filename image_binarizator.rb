@@ -54,11 +54,15 @@ module Menu
   def self.mostrar_menu
     definir_imagem_a_ser_binarizada
     definir_nivel_de_threshold
-    @imagem = Imagem.new("#{@nome_do_arquivo}")
+    @imagem = carregar_imagem @nome_do_arquivo
     @imagem.binarizar @threshold
   end
 
   private
+
+  def self.carregar_imagem(nome_do_arquivo)
+    Imagem.new("#{nome_do_arquivo}")
+  end
 
   def self.definir_imagem_a_ser_binarizada
     print "Digite o nome completo do arquivo de imagem: "
