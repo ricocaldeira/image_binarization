@@ -7,7 +7,7 @@ describe Imagem do
   context "#binarizar_imagem" do
     before :each do
       @img = Imagem.new("bridge.jpg")
-      @img.binarizar_imagem
+      @img.binarizar_imagem 0.5
     end
 
     it "Image pixels has the same values" do

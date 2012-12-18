@@ -30,24 +30,51 @@ class Imagem < Magick::ImageList
     end
   end
 
-  def gravar_imagem(nome_do_arquivo)
+  def gravar(nome_do_arquivo)
     self.write("#{nome_do_arquivo}")
   end
 
-  def extrair_nome_da_imagem
-  	@nome_da_imagem, @extensao_da_imagem = self.filename.split('.')
+  def extrair_nome
+    @nome_da_imagem, @extensao_da_imagem = self.filename.split('.')
   end
 
-  def binarizar_imagem(threshold=1)
-    extrair_nome_da_imagem
+  def binarizar(threshold=1)
+    extrair_nome
     converter_imagem_para_tons_de_cinza
     aplicar_threshold(threshold)
-    gravar_imagem("#{@nome_da_imagem}_binarizada.#{@extensao_da_imagem}")
+    gravar("#{@nome_da_imagem}_binarizada.#{@extensao_da_imagem}")
   end
 
-  private :converter_imagem_para_tons_de_cinza, :gravar_imagem, :aplicar_threshold, :extrair_nome_da_imagem
+  private :converter_imagem_para_tons_de_cinza, :gravar, :aplicar_threshold, :extrair_nome
 
 end
 
-c = Imagem.new("bridge.jpg")
-c.binarizar_imagem 0.5
+module Menu
+
+  def self.mostrar_menu
+    definir_imagem_a_ser_binarizada
+    definir_nivel_de_threshold
+    @imagem = Imagem.new("#{@nome_do_arquivo}")
+    @imagem.binarizar @threshold
+  end
+
+  private
+
+  def self.definir_imagem_a_ser_binarizada
+    print "Digite o nome completo do arquivo de imagem: "
+    @nome_do_arquivo = gets.chomp
+  end
+
+  def self.definir_nivel_de_threshold
+    print "Digite o nivel de threshold desejado (de 0 a 1): "
+    @threshold = gets.to_f
+    unless @threshold > 0 and @threshold < 1
+      puts "Nivel de threshold invalido!"
+      definir_nivel_de_threshold
+    end
+  end
+
+end
+
+Menu.mostrar_menu
+
