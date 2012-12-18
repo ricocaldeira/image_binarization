@@ -16,7 +16,7 @@ pixel.green imprime o valor do pixel verde
 
 class Imagem < Magick::ImageList
   
-	def converter_imagem_para_tons_de_cinza
+  def converter_imagem_para_tons_de_cinza
     self.quantize(256, Magick::GRAYColorspace)
   end
 
@@ -51,4 +51,3 @@ end
 
 c = Imagem.new("bridge.jpg")
 c.binarizar_imagem 0.5
-
