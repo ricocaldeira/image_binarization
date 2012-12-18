@@ -30,8 +30,8 @@ class Imagem < Magick::ImageList
     end
   end
 
-  def gravar_imagem(imagem, nome_do_arquivo)
-    imagem.write("#{nome_do_arquivo}")
+  def gravar_imagem(nome_do_arquivo)
+    self.write("#{nome_do_arquivo}")
   end
 
   def extrair_nome_da_imagem
@@ -42,18 +42,13 @@ class Imagem < Magick::ImageList
     extrair_nome_da_imagem
     converter_imagem_para_tons_de_cinza
     aplicar_threshold(threshold)
-    gravar_imagem(self, 
-      "#{@nome_da_imagem}_binarizada.#{@extensao_da_imagem}")
+    gravar_imagem("#{@nome_da_imagem}_binarizada.#{@extensao_da_imagem}")
   end
 
   private :converter_imagem_para_tons_de_cinza, :gravar_imagem, :aplicar_threshold, :extrair_nome_da_imagem
 
 end
 
-
-#c = Imagem.new("bridge.jpg")
-#c.binarizar_imagem 0.5
-#c = Teste.new("bridge.jpg")
 c = Imagem.new("bridge.jpg")
 c.binarizar_imagem 0.5
 
